@@ -25,12 +25,9 @@
     <![endif]-->
 
 
-
-
 </head>
 
 <body id="admin-page">
-
 <div id="wrapper">
 
     <!-- Navigation -->
@@ -42,7 +39,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Home</a>
+            <a class="navbar-brand" href="/">管理员</a>
         </div>
         <!-- /.navbar-header -->
 

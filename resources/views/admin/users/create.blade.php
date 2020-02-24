@@ -1,4 +1,4 @@
-@extends('layouts.admin');
+@extends('layouts.admin')
 @section('content')
 <h2>授权页面</h2>
 {!! Form::open(['method'=>'POST','action'=>'AdminUserController@store','files' => 'true']) !!}

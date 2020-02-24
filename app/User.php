@@ -33,5 +33,23 @@ class User extends Authenticatable
    {
        return $this->belongsTo(Photo::class);
    }
+
+   public function setPasswordAttribute($password)
+   {
+      if(!empty($password)){
+          $this->attributes['password']=bcrypt($password);
+      } 
+   }
+
+   
+
+   public function isAdmin()
+   {
+    //    dd($this->role->name);
+      if($this->role->name=='管理员') {
+        return true;
+      }
+      return false;
+   }
 }
 
