@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Role;
 
+use App\User;
+use App\Photo;
 use App\Http\Requests;
+use Illuminate\Http\Request;
+use App\Http\Requests\UsersRequest;
 
 class AdminUserController extends Controller
 {
@@ -16,7 +20,9 @@ class AdminUserController extends Controller
     public function index()
     {
         //
-        return view('admin.index');
+        $users=User::all();
+        // return $users;
+        return view('admin.users.index',compact('users'));
     }
 
     /**
@@ -27,6 +33,9 @@ class AdminUserController extends Controller
     public function create()
     {
         //
+        $roles=Role::lists('name','id')->all();
+        // dd($roles);
+        return view('admin.users.create',compact('roles'));
     }
 
     /**
@@ -35,9 +44,25 @@ class AdminUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsersRequest $request)
     {
         //
+        //  User::create($request->all());
+         $input=$request->all();
+         if($file=$request->file('photo_id')){
+             $name=time().$file->getClientOriginalName();
+             $file->move('images',$name);
+             //先在图片的数据库里面创建表格再在用户表里面新建
+             $photo=Photo::create(['file'=>$name]);
+             dd($photo);
+             $input['photo_id']=$photo->id;
+            // return "photo exist";
+         }
+         $input['password']=bcrypt($request->password);
+         User::create($input);
+        // return $request->all();
+        // return redirect('/admin/users');
+        // return $request->all();
     }
 
     /**
